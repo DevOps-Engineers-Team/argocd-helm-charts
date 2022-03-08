@@ -1,0 +1,28 @@
+config:
+  environment: develop
+  ns: argocd-config-develop
+  labelSelector: argocd-config-jenkins
+
+# deploy
+
+deploy:
+  replicaCount: 1
+  image:
+    repository: "jenkins/jenkins"
+    version: "2.332"
+  container:
+    name:  jenkins
+    ports:
+      - 8080
+      - 50000
+  envVars:
+    - name: JAVA_OPTS
+      value: "-XX:MaxRAMPercentage=80.0 -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Stockholm -Djava.util.logging.config.file=/var/jenkins_home/logging.properties"
+
+# svc
+
+svc:
+  name: jenkins-nodeport
+  type: NodePort
+  port: 8002
+  targetPort: 8080

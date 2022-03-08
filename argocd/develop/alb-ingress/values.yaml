@@ -1,0 +1,18 @@
+config:
+  environment: develop
+  ns: argocd-config-develop
+
+# ingress
+
+ingress:
+  name: demo-ingress
+  certArn: arn:aws:acm:eu-west-1:512632984379:certificate/4473c6ba-0ee1-4f99-9fcf-c68bf196b527
+  albHealthCheckPath: /login
+  albRules:
+    - hostUrl: sonarqube.witold-demo.com
+      serviceNname: sonarqube-nodeport
+      portNumber: 8001
+    - hostUrl: jenkins.witold-demo.com
+      serviceNname: jenkins-nodeport
+      portNumber: 8002
+  

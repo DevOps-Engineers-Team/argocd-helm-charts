@@ -1,0 +1,28 @@
+config:
+  environment: develop
+  ns: argocd-config-develop
+  labelSelector: argocd-config-sonarqube
+
+# deploy
+
+deploy:
+  replicaCount: 1
+  image:
+    repository: sonarqube
+    version: 9.2.4-developer
+  container:
+    name: sonarqube
+    port: 9000
+  envVars:
+    - name: SONAR_SEARCH_JAVAADDITIONALOPTS
+      value: -Dlog4j2.formatMsgNoLookups=true
+    - name: SONAR_WEB_JAVAOPTS
+      value: -Dsonar.web.javaOpts=-Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError
+
+# svc
+
+svc:
+  name: sonarqube-nodeport
+  type: NodePort
+  port: 8001
+  targetPort: 9000
