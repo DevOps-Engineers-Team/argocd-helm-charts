@@ -25,15 +25,7 @@ spec:
             - name: {{ .name }}
               value: {{ .value }}
             {{- end }}
-          envFrom:
-            - secretRef:
-                name: {{ .Values.deploy.secretRef.secretName }}
-                optional: false
           ports:
           - containerPort: {{ .Values.deploy.container.port }}
             protocol: TCP
-      nodeSelector:
-       {{- range $key, $value := .Values.deploy.nodeSelector }}
-        {{ $key }}: {{ $value }}
-      {{- end }}
       restartPolicy: Always
