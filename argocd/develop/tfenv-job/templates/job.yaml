@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.config.name }}
+  namespace: {{ .Values.config.ns }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{ .Values.job.container.name }}
+        image: {{ .Values.job.image.repository }}:{{ .Values.job.image.version }}
+        env:
+          {{- range .Values.job.envVars }}
+          - name: {{ .name }}
+            value: {{ .value }}
+          {{- end }}
+          {{- range .Values.job.secrets }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secretName }}
+                key: {{ .secretKey }}
+          {{- end }}
+      restartPolicy: Never
+  backoffLimit: 4
+
