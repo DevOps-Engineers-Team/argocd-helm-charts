@@ -1,0 +1,31 @@
+config:
+  environment: develop
+  name: tfenv
+  ns: argocd-config-develop
+
+# job
+
+job:
+  image:
+    repository: 512632984379.dkr.ecr.eu-west-1.amazonaws.com/tfenv
+    version: "1680633182"
+  container:
+    name: tfenv
+  envVars:
+    - name: GIT_USERNAME
+      value: "WitoldSlawko"
+    - name: GIT_REPO
+      value: "DevOps-Engineers-Team/demo-sandbox-aws-infra"
+    - name: GIT_REVISION
+      value: "main"
+    - name: REPO_PATH
+      value: "demo-sandbox-aws-infra/demo/sandbox/app"
+    - name: TF_VERSION
+      value: "1.4.4"
+    - name: TF_COMMAND
+      value: "terraform apply -auto-approve"
+  secrets:
+    - name: GIT_PAT
+      secretName: git-pat
+      secretKey: git-pat
+
