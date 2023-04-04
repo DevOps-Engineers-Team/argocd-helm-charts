@@ -1,7 +1,7 @@
 config:
   environment: develop
   name: tfenv
-  ns: argocd-config-develop
+  ns: core-infra-develop
 
 # job
 
